@@ -1,7 +1,7 @@
 from ScenarioRunner import ScenarioRunner
 from algorithm import solver
 from algorithm.graph import Graph, scenario_to_graph
-
+from testalg import decisionGraph
 
 from datetime import datetime
 
@@ -103,6 +103,11 @@ def main():
 
     route_list = solution.convertToTöbbe()
 
+    """
+    dg = decisionGraph(graph)
+    route_list = dg.returnAll()    
+    """
+
     print(f"Optimal routes: {route_list}")
 
     launch = runner.launch_scenario(scenario['id'], speed=0.01)
@@ -127,7 +132,7 @@ def main():
         sleep(0.5)
 
     show_scenario_results(scenario)
-    
+
 
 
 if __name__ == "__main__":
