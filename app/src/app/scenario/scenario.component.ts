@@ -45,7 +45,6 @@ import {MatBadge} from '@angular/material/badge';
   styleUrls: ['./scenario.component.scss']
 })
 export class ScenarioComponent implements OnInit {
-  scenarios: any[] = [];
   private _snackBar = inject(MatSnackBar);
   displayedColumns: string[] = ['id', 'vehicles', 'customers', 'actions'];
   selectedScenario: any = null;
@@ -65,48 +64,16 @@ export class ScenarioComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getScenarios();
+    this.http.post('http://localhost:8090/Scenarios/initialize_scenario?db_scenario_id=ae7f7c78-2fa6-438f-882f-25e17c514ed8', '{}')
+    
+    // Set Interval to get Scenario perdiocially
+    let timeout = setInterval(() => {this.getScenario()}, 1000);
   }
 
-  getScenarios(): void {
-    this.http.get('http://localhost:8080/scenarios').subscribe((data: any) => {
-      this.scenarios = data;
+  getScenario(): void {
+    console.log('REQUEST SCENARIO')
+    this.http.get('http://localhost:8090/Scenarios/get_scenario/ae7f7c78-2fa6-438f-882f-25e17c514ed8').subscribe((data: any) => {
+      this.selectedScenario = data;
     });
-  }
-
-  createScenario(): void {
-    if (this.numberOfVehicles !== null && (this.numberOfVehicles < 1 || this.numberOfVehicles > 50)) {
-      this._snackBar.open('Number of Vehicles must be between 1 and 50', 'close', { duration: 2000 });
-      return;
-    }
-    if (this.numberOfCustomers !== null && (this.numberOfCustomers < 1 || this.numberOfCustomers > 200)) {
-      this._snackBar.open('Number of Customers must be between 1 and 200', 'close', { duration: 2000 });
-      return;
-    }
-
-
-    const params = {
-       numberOfVehicles: this.numberOfVehicles ?? '',
-       numberOfCustomers: this.numberOfCustomers ?? ''
-    };
-
-    this.http.post('http://localhost:8080/scenario/create', null, { params }).subscribe(() => {
-      this.getScenarios();
-    });
-  }
-
-  deleteScenarioById(scenarioId: string): void {
-    this.http.delete(`http://localhost:8080/scenarios/${scenarioId}`).subscribe(() => {
-      this.getScenarios();
-    });
-  }
-
-  showDetails(scenario: any): void {
-    this.selectedScenario = scenario;
-  }
-
-  copyIdToClipboard(id: string): void {
-    this.clipboard.copy(id);
-    this._snackBar.open('Scenario ID copied to clipboard', 'close', {duration: 2000});
   }
 }
