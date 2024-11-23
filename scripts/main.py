@@ -1,6 +1,6 @@
 from ScenarioRunner import ScenarioRunner
 from graph import Graph
-from datatypes import VehicleUpdate, UpdateScenario
+from datetime import datetime
 
 from time import sleep
 import json
@@ -33,11 +33,20 @@ def show_progress(scenario):
     for vehicle in scenario['vehicles']:
         print(f"Vehicle {vehicle['id']} isAvailable {vehicle['isAvailable']}, remainingTravelTime {vehicle['remainingTravelTime']}, customerId {vehicle['customerId']}")
 
+def show_scenario_results(scenario):
+    print(f"Scenario '{scenario['id']}' completed")
+    print(f"├── Start time: {scenario['startTime']}")
+    print(f"├── End time: {scenario['endTime']}")
+    print(f"└── Duration: {datetime.fromisoformat(scenario['endTime']) - datetime.fromisoformat(scenario['startTime'])}\n")
+    for vehicle in scenario['vehicles']:
+        print(f"Vehicle '{vehicle['id']}'")
+        print(f"├── Number of trips: {vehicle['numberOfTrips']}")
+        print(f"├── Distance travelled: {vehicle['distanceTravelled']}")
+        print(f"└── Active time: {vehicle['activeTime']}\n")
+
 def main():
     runner = ScenarioRunner(config)
-
     scenario = init_example_scenario('twoCarSixCustomers.json', runner)
-
     print(json.dumps(scenario, indent=4))
 
     graph = Graph(scenario)
@@ -87,11 +96,13 @@ def main():
                 })
 
         if len(vehicle_updates) > 0:
-            print(f"------->>> Updating {len(vehicle_updates)} vehicles")
             res = runner.update_scenario(launch['scenario_id'], {"vehicles": vehicle_updates})
             print(f"------->>> Updated {len(res['updatedVehicles'])} vehicles")
         
         sleep(0.5)
+
+    print("Scenario completed")
+    
 
 
 if __name__ == "__main__":
