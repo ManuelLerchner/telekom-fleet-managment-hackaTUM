@@ -1,75 +1,70 @@
-from dataclasses import dataclass
-from typing import List, Optional
+from typing import TypedDict, List, Optional
 from datetime import datetime
 
 
-@dataclass
-class Vehicle:
+class Config(TypedDict):
+    backend_url: str
+
+
+class Vehicle(TypedDict, total=False):
     """Represents a vehicle in the system"""
-    id: str
+    id: str  # Required field
+    coordX: float  # Required field
+    coordY: float  # Required field
+    isAvailable: bool
+    vehicleSpeed: float
+    customerId: str
+    remainingTravelTime: float
+    distanceTravelled: float
+    activeTime: float
+    numberOfTrips: int
+
+
+class VehicleUpdate(TypedDict, total=False):
+    """Represents an update to a vehicle's information"""
+    id: str  # Required field
+    customerId: str
+
+
+class Customer(TypedDict, total=False):
+    """Represents a customer in the system"""
+    id: str  # Required field
     coordX: float
     coordY: float
-    isAvailable: Optional[bool] = None
-    vehicleSpeed: Optional[float] = None
-    customerId: Optional[str] = None
-    remainingTravelTime: Optional[float] = None
-    distanceTravelled: Optional[float] = None
-    activeTime: Optional[float] = None
-    numberOfTrips: Optional[int] = None
+    destinationX: float
+    destinationY: float
+    awaitingService: bool
 
 
-@dataclass
-class VehicleUpdate:
-    """Represents an update to a vehicle's information"""
-    id: str
-    customerId: Optional[str] = None
-
-
-@dataclass
-class Customer:
-    """Represents a customer in the system"""
-    id: str
-    coordX: Optional[float] = None
-    coordY: Optional[float] = None
-    destinationX: Optional[float] = None
-    destinationY: Optional[float] = None
-    awaitingService: Optional[bool] = None
-
-
-@dataclass
-class Scenario:
+class Scenario(TypedDict, total=False):
     """Represents a complete scenario with vehicles and customers"""
-    id: str
-    vehicles: List[Vehicle]
-    customers: List[Customer]
-    startTime: Optional[str] = None
-    endTime: Optional[str] = None
-    status: Optional[str] = None
+    id: str  # Required field
+    vehicles: List[Vehicle]  # Required field
+    customers: List[Customer]  # Required field
+    startTime: str
+    endTime: str
+    status: str
 
 
-@dataclass
-class UpdateScenario:
+class UpdateScenario(TypedDict):
     """Represents an update to a scenario"""
     vehicles: List[VehicleUpdate]
 
 
-@dataclass
-class UpdateScenarioResponse:
+class UpdateScenarioResponse(TypedDict, total=False):
     """Represents the response to an update scenario request"""
-    updated_vehicles: List[Vehicle]
-    failed_to_update: Optional[List[Vehicle]]
+    updated_vehicles: List[Vehicle]  # Required field
+    failed_to_update: List[Vehicle]
 
 
-@dataclass
-class InitializeScenarioResponse:
+class InitializeScenarioResponse(TypedDict, total=False):
     """Represents the response to an initialize scenario request"""
-    message: str
-    error: Optional[str]
+    message: str  # Required field
+    error: str
     scenario: Scenario
 
 
-@dataclass
-class LaunchScenarioResponse:
+class LaunchScenarioResponse(TypedDict):
     """Represents the response to a launch scenario request"""
     message: str
     scenario_id: str

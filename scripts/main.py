@@ -13,7 +13,6 @@ def init_example_scenario(runner:  ScenarioRunner):
         exampleScenario = json.load(f)
     scenario = runner.initialize_scenario(exampleScenario)
 
-
     if 'error' in scenario:
         print(scenario['error'])
         id = re.search(
@@ -22,9 +21,9 @@ def init_example_scenario(runner:  ScenarioRunner):
         scenario = runner.get_scenario(id)
         return scenario
     else:
-        print(scenario.message)
+        print(scenario['message'])
 
-        return scenario.scenario
+        return scenario['scenario']
 
 
 def main():
@@ -32,11 +31,12 @@ def main():
 
     scenario = init_example_scenario(runner)
 
-    print(json.dumps(dataclasses.asdict(scenario), indent=4))
+    print(json.dumps(scenario, indent=4))
 
-    launch = runner.launch_scenario(scenario.id, speed=0.2)
+    launch = runner.launch_scenario(scenario['id'], speed=0.2)
 
-    print(f"Launched scenario {launch.scenario_id} at {launch.startTime}")
+    print(f"Launched scenario {launch['scenario_id']} at {
+          launch['startTime']}")
 
 
 if __name__ == "__main__":

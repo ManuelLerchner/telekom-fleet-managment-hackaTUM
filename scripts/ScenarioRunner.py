@@ -1,42 +1,42 @@
 import dataclasses
 import requests
 from datatypes import *
-
-
-def dataclass_from_dict(klass, d):
-    try:
-        fieldtypes = {f.name: f.type for f in dataclasses.fields(klass)}
-        return klass(**{f: dataclass_from_dict(fieldtypes[f], d[f]) for f in d})
-    except:
-        return d  # Not a dataclass field
+from typing import TypedDict, Dict, Any
 
 
 class ScenarioRunner:
-    def __init__(self, config):
+    def __init__(self, config: Config):
         self.config = config
         self.backend_url = config['backend_url']
 
-    def get_scenario(self, scenarioID) -> Scenario:
+    def get_scenario(self, scenario_id: str) -> Scenario:
         response = requests.get(
-            f'{self.backend_url}/Scenarios/get_scenario/{scenarioID}').json()
-        return dataclass_from_dict(Scenario, response)
+            f'{self.backend_url}/Scenarios/get_scenario/{scenario_id}'
+        ).json()
+        return response
 
-    def update_scenario(self, scenarioID, data) -> UpdateScenarioResponse:
+    def update_scenario(self, scenario_id: str, data: UpdateScenario) -> UpdateScenarioResponse:
         response = requests.put(
-            f'{self.backend_url}/Scenarios/{scenarioID}', json=data).json()
-        return dataclass_from_dict(UpdateScenarioResponse, response)
+            f'{self.backend_url}/Scenarios/{scenario_id}',
+            json=data
+        ).json()
+        return response
 
-    def initialize_scenario(self, scenarioID) -> InitializeScenarioResponse:
+    def initialize_scenario_by_id(self, scenario_id: str) -> InitializeScenarioResponse:
         response = requests.post(
-            f'{self.backend_url}/Scenarios/initialize_scenario/{scenarioID}').json()
-        return dataclass_from_dict(InitializeScenarioResponse, response)
+            f'{self.backend_url}/Scenarios/initialize_scenario/{scenario_id}'
+        ).json()
+        return response
 
-    def initialize_scenario(self, body) -> InitializeScenarioResponse:
+    def initialize_scenario(self, body: Dict[str, Any]) -> InitializeScenarioResponse:
         response = requests.post(
-            f'{self.backend_url}/Scenarios/initialize_scenario', json=body).json()
-        return dataclass_from_dict(InitializeScenarioResponse, response)
+            f'{self.backend_url}/Scenarios/initialize_scenario',
+            json=body
+        ).json()
+        return response
 
-    def launch_scenario(self, scenarioID, speed=0.2) -> LaunchScenarioResponse:
+    def launch_scenario(self, scenario_id: str, speed: float = 0.2) -> LaunchScenarioResponse:
         response = requests.post(
-            f'{self.backend_url}/Runner/launch_scenario/{scenarioID}').json()
-        return dataclass_from_dict(LaunchScenarioResponse, response)
+            f'{self.backend_url}/Runner/launch_scenario/{scenario_id}'
+        ).json()
+        return response
