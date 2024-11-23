@@ -8,7 +8,7 @@ class Vertex:
         self.type = type
 
     def __str__(self):
-        return f"{self.name}: {self.pos}t, {self.type}"
+        return f"[{self.name}: {self.pos}, {self.type}]"
 
     def __repr__(self):
         return self.__str__()
@@ -113,3 +113,14 @@ class Graph:
             print(f"Graph has been saved to {output_file}")
         except Exception as e:
             print(f"Error saving graph: {e}")
+
+    def __str__(self):
+        vstring = ""
+        for v in self.vertices:
+            vstring += f"{v}\n"
+
+        estring = ""
+        for (v1, w, v2) in self.w_edges:
+            estring += f"{v1} -- {w} -- {v2}\n"
+
+        return f"Vertices:\n{vstring}\nEdges:\n{estring}"

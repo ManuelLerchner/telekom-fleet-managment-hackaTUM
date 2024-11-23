@@ -32,15 +32,15 @@ for (c_start1, c_goal1) in customers:
 g = Graph(cars + [c[0] for c in customers] + [c[1]
                                               for c in customers], edges)
 
+print(g)
+
 g.draw_graph(output_file="graph.png")
 
-for i in range(1, 10):
-    checks = i * 5
 
-    (graph, total_distance, solution) = solver.solve(g, max_checks=checks)
+(graph, total_distance, solution) = solver.solve(g, max_checks=10000)
 
-    # solver.print_solution(solution.car_paths, total_distance)
+solver.print_solution(solution.car_paths, total_distance)
 
-    g.draw_graph(solution=solution, output_file="solution.png")
+g.draw_graph(solution=solution, output_file="solution.png")
 
-    print(f"Checks: {checks}, Distance: {total_distance}")
+print(solution.convertToTöbbe())
