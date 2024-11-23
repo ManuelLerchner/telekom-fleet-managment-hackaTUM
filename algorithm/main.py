@@ -2,16 +2,16 @@ import solver
 from graph import *
 
 
-A1 = Vertex("A1", (-5, 1), "auto")
-A2 = Vertex("A2", (2, -1), "auto")
+A1 = Vertex("A1", (-5, 1), "vehicle")
+A2 = Vertex("A2", (2, -1), "vehicle")
 
-K1 = Vertex("K1", (-4, -0.5), "kunde")
-K2 = Vertex("K2", (0, -1), "kunde")
-K3 = Vertex("K3", (4, -1), "kunde")
+K1 = Vertex("K1", (-4, -0.5), "start")
+K2 = Vertex("K2", (0, -1), "start")
+K3 = Vertex("K3", (4, -1), "start")
 
-Z1 = Vertex("Z1", (0, 1), "ziel")
-Z2 = Vertex("Z2", (-2, -2), "ziel")
-Z3 = Vertex("Z3", (3, 5), "ziel")
+Z1 = Vertex("Z1", (0, 1), "destination")
+Z2 = Vertex("Z2", (-2, -2), "destination")
+Z3 = Vertex("Z3", (3, 5), "destination")
 
 cars = [A1, A2]
 customers = [(K1, Z1), (K2, Z2), (K3, Z3)]

@@ -9,7 +9,7 @@ for i in range(5):
     rx = random.uniform(-10, 10)
     ry = random.uniform(-10, 10)
 
-    cars.append(Vertex(f"A{i}", (rx, ry), "auto"))
+    cars.append(Vertex(f"A{i}", (rx, ry), "vehicle"))
 
 customers = []
 for i in range(10):
@@ -19,8 +19,8 @@ for i in range(10):
     zx = random.uniform(-10, 10)
     zy = random.uniform(-10, 10)
 
-    c = Vertex(f"K{i}", (kx, ky), "kunde")
-    z = Vertex(f"Z{i}", (zx, zy), "ziel")
+    c = Vertex(f"K{i}", (kx, ky), "start")
+    z = Vertex(f"Z{i}", (zx, zy), "destination")
 
     customers.append((c, z))
 
