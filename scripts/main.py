@@ -14,7 +14,7 @@ def init_example_scenario(runner:  ScenarioRunner):
     scenario = runner.initialize_scenario(exampleScenario)
 
 
-    if scenario['error'] is not None:
+    if 'error' in scenario:
         print(scenario['error'])
         id = re.search(
             r"Scenario with ID (.+?) is already running", scenario['error']).group(1)
