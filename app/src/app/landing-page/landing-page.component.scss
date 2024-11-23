@@ -1,0 +1,38 @@
+.landing-page {
+  text-align: center;
+  padding: 6px;
+  font-family: 'Roboto', sans-serif; /* Apply Roboto font */
+  margin: 6px;
+}
+
+mat-card {
+  padding: 6px;
+}
+
+mat-card-title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+mat-list-item {
+  font-size: 16px;
+}
+
+
+.component-card {
+  flex: 1;
+  margin: 6px;
+  padding: 6px; /* Add padding to each card */
+}
+
+.workflow-steps {
+  display: flex;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.workflow-step {
+  flex: 1;
+  gap: 6px;
+  padding: 6px; /* Add padding to each workflow step card */
+}

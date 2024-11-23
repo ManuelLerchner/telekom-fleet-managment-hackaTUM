@@ -1,5 +1,10 @@
 <mat-toolbar color="accent">
-  <button mat-fab extended onclick="console.log('TEST')">
-    Start Simulation
+  <button mat-fab extended routerLink="/" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+    <mat-icon>home</mat-icon>
+    Home
+  </button>
+  <button mat-fab extended routerLink="/scenario" routerLinkActive="active-link">
+    <mat-icon>construction</mat-icon>
+    Scenario Administration
   </button>
 </mat-toolbar>
