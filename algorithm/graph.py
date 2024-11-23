@@ -94,7 +94,7 @@ class Graph:
         # Add edges
         if not solution:
             for (v1, w, v2) in self.w_edges:
-                dot.edge(v1.name, v2.name, label=f"{w:.1f}")
+                dot.edge(v1.name, v2.name, label=f"{w:.4f}")
 
         # Highlight solution
         if solution:
