@@ -13,7 +13,8 @@ def init_example_scenario(runner:  ScenarioRunner):
         exampleScenario = json.load(f)
     scenario = runner.initialize_scenario(exampleScenario)
 
-    if type(scenario) == dict:
+
+    if scenario['error'] is not None:
         print(scenario['error'])
         id = re.search(
             r"Scenario with ID (.+?) is already running", scenario['error']).group(1)
