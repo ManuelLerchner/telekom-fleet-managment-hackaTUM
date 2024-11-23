@@ -2,6 +2,7 @@ import dataclasses
 import requests
 from datatypes import *
 from typing import TypedDict, Dict, Any
+import json
 
 
 class ScenarioRunner:
@@ -17,7 +18,7 @@ class ScenarioRunner:
 
     def update_scenario(self, scenario_id: str, data: UpdateScenario) -> UpdateScenarioResponse:
         response = requests.put(
-            f'{self.backend_url}/Scenarios/{scenario_id}',
+            f'{self.backend_url}/Scenarios/update_scenario/{scenario_id}',
             json=data
         ).json()
         return response

@@ -1,0 +1,82 @@
+{
+    "id": "03cef0be-6ba4-4132-bcf0-e8cf6cccd086",
+    "startTime": null,
+    "endTime": null,
+    "status": "CREATED",
+    "vehicles": [
+      {
+        "id": "0be5d3b3-7dc9-4344-9f22-fc2b188298f8",
+        "coordX": 48.144844,
+        "coordY": 11.524369,
+        "isAvailable": true,
+        "vehicleSpeed": null,
+        "customerId": null,
+        "remainingTravelTime": null,
+        "distanceTravelled": null,
+        "activeTime": null,
+        "numberOfTrips": null
+      },
+      {
+        "id": "85d3f1da-2747-4e6c-970f-c07be28f2ea7",
+        "coordX": 48.124557,
+        "coordY": 11.580619,
+        "isAvailable": true,
+        "vehicleSpeed": null,
+        "customerId": null,
+        "remainingTravelTime": null,
+        "distanceTravelled": null,
+        "activeTime": null,
+        "numberOfTrips": null
+      }
+    ],
+    "customers": [
+      {
+        "id": "bc2ea0fd-e77f-486c-a15e-da4b39701f02",
+        "coordX": 48.146603,
+        "coordY": 11.603807,
+        "destinationX": 48.124035,
+        "destinationY": 11.541494,
+        "awaitingService": true
+      },
+      {
+        "id": "eced552d-e65a-481a-9f8b-2edd66639a5a",
+        "coordX": 48.159885,
+        "coordY": 11.641256,
+        "destinationX": 48.146763,
+        "destinationY": 11.525301,
+        "awaitingService": true
+      },
+      {
+        "id": "fb85591f-43c0-446c-8dd4-6f3a2573946a",
+        "coordX": 48.153446,
+        "coordY": 11.604041,
+        "destinationX": 48.12656,
+        "destinationY": 11.538164,
+        "awaitingService": true
+      },
+      {
+        "id": "3a1dca9f-e933-40d0-b730-d359b6fbc406",
+        "coordX": 48.12398,
+        "coordY": 11.529305,
+        "destinationX": 48.143375,
+        "destinationY": 11.520504,
+        "awaitingService": true
+      },
+      {
+        "id": "bda663b9-f082-45bd-b64e-193d05e4375d",
+        "coordX": 48.13141,
+        "coordY": 11.606757,
+        "destinationX": 48.115025,
+        "destinationY": 11.621257,
+        "awaitingService": true
+      },
+      {
+        "id": "af9d6c7c-9e04-4f03-8f45-8ece703d49bb",
+        "coordX": 48.11465,
+        "coordY": 11.602488,
+        "destinationX": 48.144463,
+        "destinationY": 11.5101185,
+        "awaitingService": true
+      }
+    ]
+  }
