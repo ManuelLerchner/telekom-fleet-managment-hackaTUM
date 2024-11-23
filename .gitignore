@@ -164,3 +164,4 @@ cython_debug/
 config.json
 app/.angular
 app/node_modules
+venv
