@@ -78,8 +78,7 @@ class Graph:
         # Add vertices
         for vertex in self.vertices:
             # Create label with vertex information
-            label = f"{vertex.name}\n({vertex.pos[0]:.1f}, {vertex.pos[1]:.1f})\n{
-                vertex.type}"
+            label = f"{vertex.name}\n({vertex.pos[0]:.1f}, {vertex.pos[1]:.1f})\n{vertex.type}"
 
             # Define node attributes based on vertex type
             attrs = {
@@ -87,7 +86,7 @@ class Graph:
                 'shape': 'box',
                 'style': 'rounded,filled',
                 'fillcolor': _get_color_for_type(vertex.type),
-                'pos': f"{vertex.pos[0]},{vertex.pos[1]}!"  # Set position
+                'pos': f"{vertex.pos[0]*100},{vertex.pos[1]*100}!"  # Set position
             }
 
             dot.node(vertex.name, **attrs)
@@ -109,11 +108,13 @@ class Graph:
 
         # Save the graph
         try:
-            dot.render(output_file.rsplit('.', 1)[
-                       0], format='png', cleanup=True)
+            dot.render(output_file.rsplit('.', 1)[0], format='png', cleanup=True)
             print(f"Graph has been saved to {output_file}")
         except Exception as e:
             print(f"Error saving graph: {e}")
+
+        # save dotfile to string
+        dot.save(output_file.rsplit('.', 1)[0] + ".dot")
 
     def __str__(self):
         vstring = ""
@@ -130,10 +131,6 @@ class Graph:
 ########################################################################################
 # Create a graph from a scenario
 ########################################################################################
-
-def distance(p1: Vertex, p2: Vertex):
-    return ((p1.pos[0] - p2.pos[0])**2 + (p1.pos[1] - p2.pos[1])**2)**0.5
-
 def scenario_to_graph(scenario):
     vertices = []
     edges = []
@@ -147,7 +144,7 @@ def scenario_to_graph(scenario):
         )
 
         dest_vertex = Vertex(
-            name=customer['id'],
+            name=customer['id']+'-dest',
             pos=(customer['destinationX'],customer['destinationY']),
             type='destination'
         )
@@ -157,8 +154,7 @@ def scenario_to_graph(scenario):
 
         edges.append((
             start_vertex,
-            distance(start_vertex, dest_vertex),
-            dest_vertex,
+            dest_vertex
         ))
 
     # Add nodes for vehicle starting points
@@ -170,19 +166,19 @@ def scenario_to_graph(scenario):
         ))
 
     # Add edges from vehicle starting points to customer starting points
-    for vehicle_node in filter(lambda node: node['type'] == 'vehicle', vertices):
-        for start_vertex in filter(lambda node: node['type'] == 'start', vertices):
+    for vehicle_node in filter(lambda vertex: vertex.type == 'vehicle', vertices):
+        for start_vertex in filter(lambda vertex: vertex.type == 'start', vertices):
             edges.append((
                 vehicle_node,
-                distance(vehicle_node, start_vertex),
                 start_vertex
             ))
 
     # Add edges from customer destination points to customer starting points (exclude same customer)
-    for dest_vertex in filter(lambda node: node['type'] == 'destination', vertices):
-        for start_vertex in filter(lambda node: node['type'] == 'start' and node['id'] != dest_vertex['id'], vertices):
+    for dest_vertex in filter(lambda vertex: vertex.type == 'destination', vertices):
+        for start_vertex in filter(lambda vertex: vertex.type == 'start' and vertex.name != dest_vertex[:-5], vertices):
             edges.append((
                 dest_vertex,
-                distance(dest_vertex, start_vertex),
                 start_vertex,
             ))
+
+    return Graph(vertices, edges)
