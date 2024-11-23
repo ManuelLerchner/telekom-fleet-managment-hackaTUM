@@ -1,6 +1,6 @@
 {
-  "/api": {
-    "target": "http://localhost:8080",
+  "/Scenarios": {
+    "target": "http://localhost:8090",
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug"

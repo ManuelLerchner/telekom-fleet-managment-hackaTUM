@@ -38,6 +38,6 @@ class ScenarioRunner:
 
     def launch_scenario(self, scenario_id: str, speed: float = 0.2) -> LaunchScenarioResponse:
         response = requests.post(
-            f'{self.backend_url}/Runner/launch_scenario/{scenario_id}'
+            f'{self.backend_url}/Runner/launch_scenario/{scenario_id}?speed={speed}'
         ).json()
         return response

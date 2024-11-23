@@ -105,7 +105,7 @@ def main():
 
     print(f"Optimal routes: {route_list}")
 
-    launch = runner.launch_scenario(scenario['id'], speed=5)
+    launch = runner.launch_scenario(scenario['id'], speed=0.01)
     print(f"Launched scenario {launch['scenario_id']} at {launch['startTime']}")
 
     while scenario['status'] != 'COMPLETED':

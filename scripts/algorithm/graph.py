@@ -86,7 +86,7 @@ class Graph:
                 'shape': 'box',
                 'style': 'rounded,filled',
                 'fillcolor': _get_color_for_type(vertex.type),
-                'pos': f"{vertex.pos[0]*100},{vertex.pos[1]*100}!"  # Set position
+                'pos': f"{vertex.pos[1]*100},{vertex.pos[0]*100}!"  # Set position
             }
 
             dot.node(vertex.name, **attrs)
