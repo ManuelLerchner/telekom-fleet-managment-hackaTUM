@@ -1,6 +1,8 @@
-import dataclasses
 from ScenarioRunner import ScenarioRunner
 from graph import Graph
+from datatypes import VehicleUpdate, UpdateScenario
+
+from time import sleep
 import json
 import re
 
@@ -10,7 +12,7 @@ with open('config.json') as f:
 
 
 def init_example_scenario(filename: str, runner:  ScenarioRunner):
-    with open(filename) as f:
+    with open('scenarios/'+filename) as f:
         exampleScenario = json.load(f)
     scenario = runner.initialize_scenario(exampleScenario)
 
@@ -27,19 +29,69 @@ def init_example_scenario(filename: str, runner:  ScenarioRunner):
         return scenario['scenario']
 
 
+def show_progress(scenario):
+    for vehicle in scenario['vehicles']:
+        print(f"Vehicle {vehicle['id']} isAvailable {vehicle['isAvailable']}, remainingTravelTime {vehicle['remainingTravelTime']}, customerId {vehicle['customerId']}")
+
 def main():
     runner = ScenarioRunner(config)
 
-    scenario = init_example_scenario('smallScenario.json', runner)
+    scenario = init_example_scenario('twoCarSixCustomers.json', runner)
 
     print(json.dumps(scenario, indent=4))
 
     graph = Graph(scenario)
     print(graph)
 
-    # launch = runner.launch_scenario(scenario['id'], speed=0.2)
+    # TODO Find optimal routes
 
-    # print(f"Launched scenario {launch['scenario_id']} at {launch['startTime']}")
+    # Test route for 2 vehicles and 6 customers scenario
+    # Cars: 
+    #   0be5d3b3-7dc9-4344-9f22-fc2b188298f8 
+    #   85d3f1da-2747-4e6c-970f-c07be28f2ea7
+    # Customers: 
+    #   bc2ea0fd-e77f-486c-a15e-da4b39701f02
+    #   eced552d-e65a-481a-9f8b-2edd66639a5a
+    #   fb85591f-43c0-446c-8dd4-6f3a2573946a
+    #   3a1dca9f-e933-40d0-b730-d359b6fbc406
+    #   bda663b9-f082-45bd-b64e-193d05e4375d
+    #   af9d6c7c-9e04-4f03-8f45-8ece703d49bb
+    route_list = {
+        "0be5d3b3-7dc9-4344-9f22-fc2b188298f8": [
+                "bc2ea0fd-e77f-486c-a15e-da4b39701f02",
+                "eced552d-e65a-481a-9f8b-2edd66639a5a",
+                "fb85591f-43c0-446c-8dd4-6f3a2573946a",
+                "3a1dca9f-e933-40d0-b730-d359b6fbc406"
+            ],
+        "85d3f1da-2747-4e6c-970f-c07be28f2ea7": [
+                "bda663b9-f082-45bd-b64e-193d05e4375d",
+                "af9d6c7c-9e04-4f03-8f45-8ece703d49bb"
+            ]
+    }
+
+    print(f"Optimal routes: {route_list}")
+
+    launch = runner.launch_scenario(scenario['id'], speed=5)
+    print(f"Launched scenario {launch['scenario_id']} at {launch['startTime']}")
+
+    while(scenario['status'] != 'COMPLETED'):
+        scenario = runner.get_scenario(launch['scenario_id'])
+        show_progress(scenario)
+        
+        vehicle_updates = []
+        for vehicle in scenario['vehicles']:
+            if vehicle['isAvailable'] and vehicle['customerId'] is None and len(route_list[vehicle['id']]) > 0:
+                vehicle_updates.append({
+                    "id": vehicle['id'],
+                    "customerId": route_list[vehicle['id']].pop(0)
+                })
+
+        if len(vehicle_updates) > 0:
+            print(f"------->>> Updating {len(vehicle_updates)} vehicles")
+            res = runner.update_scenario(launch['scenario_id'], {"vehicles": vehicle_updates})
+            print(f"------->>> Updated {len(res['updatedVehicles'])} vehicles")
+        
+        sleep(0.5)
 
 
 if __name__ == "__main__":
