@@ -1,16 +1,6 @@
 <div class="container">
   <div class="table-container">
-    <div class="form-row">
-      <mat-form-field>
-        <mat-label>Number of Vehicles</mat-label>
-        <input matInput type="number" [(ngModel)]="numberOfVehicles" min="1" max="50">
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Number of Customers</mat-label>
-        <input matInput type="number" [(ngModel)]="numberOfCustomers" min="1" max="2  00">
-      </mat-form-field>
-      <button mat-raised-button color="accent" class="padded-button" (click)="createScenario()">Create Scenario</button>
-    </div>
+    
     <table mat-table [dataSource]="scenarios" class="mat-elevation-z8">
       <!-- ID Column -->
       <ng-container matColumnDef="id">
@@ -38,7 +28,6 @@
         <td mat-cell *matCellDef="let scenario">
           <div class="actions-container">
             <button mat-stroked-button color="primary" (click)="showDetails(scenario)">Show Details</button>
-            <button mat-stroked-button color="warn" (click)="deleteScenarioById(scenario.id)">Delete</button>
           </div>
         </td>
       </ng-container>
@@ -46,15 +35,9 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-  </div>
 
-  <mat-card class="details">
-    <mat-card-header>
-      <mat-card-title>Scenario Details</mat-card-title>
-    </mat-card-header>
-    <mat-card-content *ngIf="selectedScenario">
-      <mat-chip class="chip" color="primary" (click)="copyIdToClipboard(selectedScenario.id)">ID: {{selectedScenario.id}}</mat-chip>
-      <div class="details-row">
+    <div class="class232">
+     <div class="details-row">
         <button mat-stroked-button color="primary" matBadge="{{selectedScenario?.vehicles.length}}" matBadgeColor="accent"
                 (click)="toggleVehicles()">Show Scenario Vehicles
         </button>
@@ -100,6 +83,23 @@
           <tr mat-row *matRowDef="let row; columns: ['position', 'id'];"></tr>
         </table>
       </div>
+
+
+
+
+
+    </div>
+
+  </div>
+
+  
+
+  <mat-card class="details">
+    <mat-card-header>
+      <mat-card-title>Scenario Details</mat-card-title>
+    </mat-card-header>
+    <mat-card-content *ngIf="selectedScenario">
+      
       <app-map [vehicles]="selectedScenario?.vehicles" [customers]="selectedScenario?.customers"></app-map>
     </mat-card-content>
   </mat-card>
