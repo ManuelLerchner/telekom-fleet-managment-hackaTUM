@@ -27,6 +27,49 @@ def init_example_scenario(filename: str, runner:  ScenarioRunner):
         print(scenario['message'])
 
         return scenario['scenario']
+    
+
+# Test route for 2 vehicles and 6 customers scenario
+# Cars: 
+#   0be5d3b3-7dc9-4344-9f22-fc2b188298f8 
+#   85d3f1da-2747-4e6c-970f-c07be28f2ea7
+# Customers: 
+#   bc2ea0fd-e77f-486c-a15e-da4b39701f02
+#   eced552d-e65a-481a-9f8b-2edd66639a5a
+#   fb85591f-43c0-446c-8dd4-6f3a2573946a
+#   3a1dca9f-e933-40d0-b730-d359b6fbc406
+#   bda663b9-f082-45bd-b64e-193d05e4375d
+#   af9d6c7c-9e04-4f03-8f45-8ece703d49bb
+# route_list_two_cars_six_customers = {
+#     "0be5d3b3-7dc9-4344-9f22-fc2b188298f8": [
+#             "bc2ea0fd-e77f-486c-a15e-da4b39701f02",
+#             "eced552d-e65a-481a-9f8b-2edd66639a5a",
+#             "fb85591f-43c0-446c-8dd4-6f3a2573946a",
+#             "3a1dca9f-e933-40d0-b730-d359b6fbc406"
+#         ],
+#     "85d3f1da-2747-4e6c-970f-c07be28f2ea7": [
+#             "bda663b9-f082-45bd-b64e-193d05e4375d",
+#             "af9d6c7c-9e04-4f03-8f45-8ece703d49bb"
+#         ]
+# }
+
+
+# Test route for smallScenario.json
+# Cars:
+#   0a7d1065-4699-4e8e-a21b-447868bc9e70
+#   8a60129c-7639-43c1-b9b8-765c890a5df0
+# Customers:
+#   19a4d8da-786e-4c64-8619-32a25228a17b
+#   f9a97998-557e-4c40-8b60-42ce8c2e52f9
+route_list_small_scenario = {
+  "0a7d1065-4699-4e8e-a21b-447868bc9e70": [
+    "19a4d8da-786e-4c64-8619-32a25228a17b"
+  ],
+  "8a60129c-7639-43c1-b9b8-765c890a5df0": [
+    "f9a97998-557e-4c40-8b60-42ce8c2e52f9"
+  ]
+}
+
 
 
 def show_progress(scenario):
@@ -46,7 +89,7 @@ def show_scenario_results(scenario):
 
 def main():
     runner = ScenarioRunner(config)
-    scenario = init_example_scenario('twoCarSixCustomers.json', runner)
+    scenario = init_example_scenario('smallScenario.json', runner)
     print(json.dumps(scenario, indent=4))
 
     graph = Graph(scenario)
@@ -54,29 +97,7 @@ def main():
 
     # TODO Find optimal routes
 
-    # Test route for 2 vehicles and 6 customers scenario
-    # Cars: 
-    #   0be5d3b3-7dc9-4344-9f22-fc2b188298f8 
-    #   85d3f1da-2747-4e6c-970f-c07be28f2ea7
-    # Customers: 
-    #   bc2ea0fd-e77f-486c-a15e-da4b39701f02
-    #   eced552d-e65a-481a-9f8b-2edd66639a5a
-    #   fb85591f-43c0-446c-8dd4-6f3a2573946a
-    #   3a1dca9f-e933-40d0-b730-d359b6fbc406
-    #   bda663b9-f082-45bd-b64e-193d05e4375d
-    #   af9d6c7c-9e04-4f03-8f45-8ece703d49bb
-    route_list = {
-        "0be5d3b3-7dc9-4344-9f22-fc2b188298f8": [
-                "bc2ea0fd-e77f-486c-a15e-da4b39701f02",
-                "eced552d-e65a-481a-9f8b-2edd66639a5a",
-                "fb85591f-43c0-446c-8dd4-6f3a2573946a",
-                "3a1dca9f-e933-40d0-b730-d359b6fbc406"
-            ],
-        "85d3f1da-2747-4e6c-970f-c07be28f2ea7": [
-                "bda663b9-f082-45bd-b64e-193d05e4375d",
-                "af9d6c7c-9e04-4f03-8f45-8ece703d49bb"
-            ]
-    }
+    route_list = route_list_small_scenario
 
     print(f"Optimal routes: {route_list}")
 
@@ -101,7 +122,7 @@ def main():
         
         sleep(0.5)
 
-    print("Scenario completed")
+    show_scenario_results(scenario)
     
 
 
