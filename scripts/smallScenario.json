@@ -1,0 +1,50 @@
+{
+  "id": "d9deaa85-7eed-493b-9b37-d20155da3f7d",
+  "startTime": null,
+  "endTime": null,
+  "status": "CREATED",
+  "vehicles": [
+    {
+      "id": "0a7d1065-4699-4e8e-a21b-447868bc9e70",
+      "coordX": 48.131927,
+      "coordY": 11.626534,
+      "isAvailable": true,
+      "vehicleSpeed": null,
+      "customerId": null,
+      "remainingTravelTime": null,
+      "distanceTravelled": null,
+      "activeTime": null,
+      "numberOfTrips": null
+    },
+    {
+      "id": "8a60129c-7639-43c1-b9b8-765c890a5df0",
+      "coordX": 48.12616,
+      "coordY": 11.542184,
+      "isAvailable": true,
+      "vehicleSpeed": null,
+      "customerId": null,
+      "remainingTravelTime": null,
+      "distanceTravelled": null,
+      "activeTime": null,
+      "numberOfTrips": null
+    }
+  ],
+  "customers": [
+    {
+      "id": "19a4d8da-786e-4c64-8619-32a25228a17b",
+      "coordX": 48.160538,
+      "coordY": 11.595376,
+      "destinationX": 48.137684,
+      "destinationY": 11.504875,
+      "awaitingService": true
+    },
+    {
+      "id": "f9a97998-557e-4c40-8b60-42ce8c2e52f9",
+      "coordX": 48.13071,
+      "coordY": 11.5281725,
+      "destinationX": 48.159306,
+      "destinationY": 11.56607,
+      "awaitingService": true
+    }
+  ]
+}
