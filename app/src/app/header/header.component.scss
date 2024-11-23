@@ -1,0 +1,16 @@
+mat-toolbar {
+  display: flex;
+  justify-content: center; /* Center the buttons */
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1000; /* Ensure it stays above other content */
+  padding: 0; /* Remove any padding */
+  box-sizing: border-box;
+}
+
+mat-toolbar button {
+  margin-right: 10px; /* Add padding between buttons */
+}

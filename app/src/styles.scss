@@ -1,0 +1,61 @@
+@import "../node_modules/@angular/material/prebuilt-themes/indigo-pink.css";
+
+.main-content {
+  padding-top: 64px; /* Adjust based on the height of your header */
+}
+///* styles.scss */
+//$magenta: #E20074;
+//$gray: #808080;
+//$black: #000000;
+//$white: #ffffff;
+//
+//html, body, app-root {
+//  height: 100%;
+//  margin: 1;
+//  padding: 0;
+//}
+//
+//body {
+//  font-family: Arial, sans-serif;
+//  background-color: $white;
+//  color: $black;
+//  display: flex;
+//  flex-direction: column;
+//}
+//
+//header {
+//  background-color: $magenta;
+//  color: $white;
+//  padding: 20px;
+//  text-align: center;
+//  font-size: 1.5em;
+//}
+//
+//.container {
+//  display: flex;
+//  flex: 1;
+//  height: calc(100% - 60px);
+//}
+//
+//.sidebar {
+//  background-color: $gray;
+//  width: 200px;
+//  padding: 20px;
+//  display: flex;
+//  flex-direction: column;
+//  height: 100%;
+//}
+//
+//.sidebar a {
+//  text-decoration: none;
+//  color: $black;
+//  margin: 15px 0;
+//  font-weight: bold;
+//}
+//
+//.content {
+//  flex: 1;
+//  padding: 20px;
+//  overflow-y: auto;
+//}
+//
