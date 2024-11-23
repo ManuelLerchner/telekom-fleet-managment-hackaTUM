@@ -83,7 +83,6 @@ export class ScenarioComponent implements OnInit {
         "http://localhost:1111/Scenarios/get_scenario/d9deaa85-7eed-493b-9b37-d20155da3f7d"
       )
       .subscribe((data: any) => {
-        console.log("SCENARIO", data);
         this.selectedScenario = data;
       });
   }

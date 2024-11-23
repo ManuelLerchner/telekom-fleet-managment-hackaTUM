@@ -101,16 +101,16 @@ def main():
     (graph, total_distance, solution) = solver.solve(graph, max_checks=1000)
     graph.draw_graph(output_file='solution.png', solution=solution)
 
-    route_list = solution.convertToTöbbe()
+    # route_list = solution.convertToTöbbe()
 
+    """
     """
     dg = decisionGraph(graph)
     route_list = dg.returnAll()    
-    """
 
     print(f"Optimal routes: {route_list}")
 
-    launch = runner.launch_scenario(scenario['id'], speed=0.01)
+    launch = runner.launch_scenario(scenario['id'], speed=0.1)
     print(f"Launched scenario {launch['scenario_id']} at {launch['startTime']}")
 
     while scenario['status'] != 'COMPLETED':
