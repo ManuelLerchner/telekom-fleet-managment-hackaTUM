@@ -1,8 +1,9 @@
 import graphviz
+import typing
 
 
 class Vertex:
-    def __init__(self, name, pos: tuple[float, float], type: str):
+    def __init__(self, name, pos: tuple[float, float], type: typing.Literal["vehicle", "start", "destination"]):
         self.name = name
         self.pos = pos
         self.type = type
@@ -61,11 +62,11 @@ class Graph:
 
     def draw_graph(self, output_file="graph.png", solution=None):
         def _get_color_for_type(vertex_type):
-            if vertex_type == "auto":
+            if vertex_type == "vehicle":
                 return "lightblue"
-            elif vertex_type == "kunde":
+            elif vertex_type == "start":
                 return "lightgreen"
-            elif vertex_type == "ziel":
+            elif vertex_type == "destination":
                 return "lightcoral"
             else:
                 return "white"

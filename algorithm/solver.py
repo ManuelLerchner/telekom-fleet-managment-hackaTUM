@@ -2,7 +2,7 @@ from graph import *
 
 
 def get_possible_moves(graph: Graph):
-    cars = [v for v in graph.vertices if v.type == "auto"]
+    cars = [v for v in graph.vertices if v.type == "vehicle"]
 
     moves: list[tuple[Vertex, tuple[Vertex, float, Vertex]]] = []
     for car in cars:
@@ -37,7 +37,7 @@ def perform_move(graph: Graph, move: tuple[Vertex, tuple[Vertex, float, Vertex]]
 
     graph.removeVertex(customer_goal)
 
-    newcar = Vertex(car.name, customer_goal.pos, "auto")
+    newcar = Vertex(car.name, customer_goal.pos, "vehicle")
 
     graph.addVertex(newcar, connections)
 
@@ -54,8 +54,8 @@ def undo_move(graph: Graph, move: tuple[Vertex, tuple[Vertex, float, Vertex]]):
     # remove car
     graph.removeVertex(car)
 
-    customers = [v for v in graph.vertices if v.type == "kunde"]
-    goals = [v for v in graph.vertices if v.type == "ziel"]
+    customers = [v for v in graph.vertices if v.type == "start"]
+    goals = [v for v in graph.vertices if v.type == "destination"]
 
     # add customer goal
     graph.addVertex(customer_goal, customers)
@@ -70,7 +70,7 @@ def undo_move(graph: Graph, move: tuple[Vertex, tuple[Vertex, float, Vertex]]):
     # add car
     graph.addVertex(car, customers + [customer])
 
-    cars = [v for v in graph.vertices if v.type == "auto"]
+    cars = [v for v in graph.vertices if v.type == "vehicle"]
 
     for other_car in cars:
         if other_car == car:
@@ -135,11 +135,11 @@ def solve(graph: Graph, car_paths: dict = None, best_solution: Solution = None, 
         # Initialize car paths for all cars
         car_paths = {
             car.name: CarPath(car)
-            for car in graph.vertices if car.type == "auto"
+            for car in graph.vertices if car.type == "vehicle"
         }
 
     # Check if we've found a solution (no more customers)
-    customers = [v for v in graph.vertices if v.type == "kunde"]
+    customers = [v for v in graph.vertices if v.type == "start"]
     if not customers:
         best_solution.max_checks -= 1
 
