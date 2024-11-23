@@ -96,6 +96,14 @@ class Solution:
         }
         return new_solution
 
+    def convertToTöbbe(self):
+        d = dict()
+        for car, path in self.car_paths.items():
+            customers = list(map(lambda x: x[0].name, path.moves))
+            d[car] = customers
+
+        return d
+
 
 class CarPath:
     def __init__(self, initial_car: Vertex):
