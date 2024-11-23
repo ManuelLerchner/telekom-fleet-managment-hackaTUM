@@ -1,0 +1,63 @@
+.toolbar {
+  padding: 0 16px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.padded-button {
+  margin-bottom: 20px;
+}
+
+.container {
+  display: flex;
+}
+
+.table-container {
+  flex: 1;
+  padding-right: 20px;
+}
+
+.details {
+  flex: 1;
+  padding-left: 20px;
+  margin-top: 20px;
+  padding-top: 20px;
+}
+
+.details-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+  margin-bottom: 10px;
+}
+
+.mat-card-content {
+  padding: 16px;
+}
+
+.mat-button {
+  margin-left: 10px;
+}
+
+.actions-container {
+  display: flex;
+  gap: 10px;
+}
+
+.chip {
+  margin-bottom: 10px;
+}
+
+.form-row {
+  display: flex;
+  align-items: center;
+  gap: 6px; /* Adjust the gap as needed */
+
+}
+
+.padded-button {
+  margin-left: 16px;
+}

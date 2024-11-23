@@ -1,4 +1,4 @@
-from graph import *
+from algorithm.graph import Graph, Vertex
 
 
 def get_possible_moves(graph: Graph):
@@ -180,11 +180,9 @@ def solve(graph: Graph, car_paths: dict = None, best_solution: Solution = None, 
 def print_solution(car_paths: dict, total_distance: float):
     print(f"\nBest solution found with total distance: {total_distance}")
     for car_name, path in car_paths.items():
-        print(f"\nCar {car_name} path (total distance: {
-              path.total_distance()})")
+        print(f"\nCar {car_name} path (total distance: {path.total_distance()})")
         for i, (customer, time, goal) in enumerate(path.moves, 1):
-            print(f"  {i}. Pick up customer {
-                  customer.name} -> Drive to {goal.name} (time: {time})")
+            print(f"  {i}. Pick up customer {customer.name} -> Drive to {goal.name} (time: {time})")
     print("\n")
     print("\n")
     print("\n")

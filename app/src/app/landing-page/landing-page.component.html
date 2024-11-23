@@ -1,0 +1,89 @@
+<mat-card class="landing-page">
+  <mat-card-title>T-Systems Robotaxi Simulator Tool</mat-card-title>
+  <mat-card-content>
+    <p>
+      This tool is separated into 3 components that work together to simulate a robotaxi fleet in Munich. The following sections
+      describe the components and how they interact with each other.
+    </p>
+    <div class="components">
+      <mat-card class="component-card">
+        <mat-card-title>
+          <button mat-fab extended color="tertiary" routerLink="/scenario">Scenario Administration</button>
+        </mat-card-title>
+        <mat-card-content>
+          <p>The frontend application you are currently looking at exposes a scenario administration tool at the <a routerLink="/scenario">/scenario</a>
+            endpoint. It enables you to create and delete random scenarios, and it visualizes the initial positions of vehicles and
+            customers in a map.</p>
+        </mat-card-content>
+      </mat-card>
+      <mat-card class="component-card">
+        <mat-card-title>
+          <button mat-fab extended color="tertiary" (click)="openLink('http://localhost:8080/openapi/swagger-ui/index.html')">Backend Service</button>
+        </mat-card-title>
+        <mat-card-content>
+          <p>The backend service is responsible for storing and retrieving scenario data. It ensures data integrity and provides APIs for
+            the frontend to interact with the database. A OpenAPI specification is exposed for your convenience at <a
+              href="http://localhost:8080/openapi/swagger-ui/index.html">http://localhost:8080/openapi/swagger-ui/index.html</a>. The data
+            in the backend service does not change during or after a simulation run, making it possible to rerun a simulation from a
+            consistent initial state, testing different algorithms and configurations on the same data.</p>
+        </mat-card-content>
+      </mat-card>
+      <mat-card class="component-card">
+        <mat-card-title>
+          <button mat-fab extended color="tertiary" (click)="openLink('http://localhost:8090')">Scenario
+            Runner
+          </button>
+        </mat-card-title>
+        <mat-card-content>
+          <p>The scenario runner executes the simulation based on an initialised scenario. It loads the scenario data from the  backend
+            service into memory and runs the simulation, providing a metadata result after the scenario finished. An OpenAPI specification
+            for the runner is exposed at <a href="http://localhost:8090">http://localhost:8090</a>. The endpoints found in this specification
+            shall be used by your algorithm to interact with the simulation. To create a scenario and run a simulation,
+            follow the steps below.</p>
+          <div class="workflow-steps">
+            <mat-card class="workflow-step">
+              <mat-card-title>1: Scenario Creation</mat-card-title>
+              <mat-card-content>
+                Create a random scenario with the scenario administration frontend UI. You may choose up to 50 vehicles and 200 customers
+                per scenario, the default is 5 vehicles and 10 customers. These will be randomly placed in an area around Munich's center.
+                This scenario will be stored with its vehicles and customers in the backend service.
+              </mat-card-content>
+            </mat-card>
+            <mat-card class="workflow-step">
+              <mat-card-title>2 - Scenario Initialization</mat-card-title>
+              <mat-card-content>
+                After the scenario is created, you load it into the scenario runner by sending a POST request with the scenario id as a
+                parameter to the /scenario endpoint. (See the scenario runner API spec for details) The scenario runner will load the
+                scenario entities into memory and return ok if the initialisation was successful.
+              </mat-card-content>
+            </mat-card>
+            <mat-card class="workflow-step">
+              <mat-card-title>3 - Scenario Run</mat-card-title>
+              <mat-card-content>
+                You can then start the simulation by sending a POST request to the /runner/launch_scenario endpoint. You may
+                specify the scenario id and simulation speed as additional request parameters on this endpoint (see API spec for details).
+                While the scenario is running, it will expect vehicle comissioning requests on the /scenarios/update_scenario endpoint.
+                The scenario runner will process these requests and update the scenario state accordingly, returning the updated scenario
+                state in the response. The simulation will continue until all customers are at their destination or the scenario is stopped.
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </mat-card-content>
+      </mat-card>
+      <mat-card class="component-card">
+        <mat-card-title>
+          Further considerations
+        </mat-card-title>
+        <mat-card-content>
+          <p>
+            The scenario runner runs at 0.2 speed by default. That means 1 second in real time is equal to 0.2 seconds in simulation time.
+            Make sure to adjust your algorithm to this speed factor, or specify a different speed factor in the scenario runner API.
+            <br><br>
+            Vehicle speeds are calculated on a per-commission basis. They vary between 8.33 and 13.89 m/s (30 to 50
+            km/h), simulating changing traffic conditions / speed limits.
+          </p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </mat-card-content>
+</mat-card>

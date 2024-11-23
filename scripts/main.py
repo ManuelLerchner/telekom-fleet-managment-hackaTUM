@@ -1,5 +1,8 @@
 from ScenarioRunner import ScenarioRunner
-from graph import Graph
+from algorithm import solver
+from algorithm.graph import Graph, scenario_to_graph
+
+
 from datetime import datetime
 
 from time import sleep
@@ -92,19 +95,20 @@ def main():
     scenario = init_example_scenario('smallScenario.json', runner)
     print(json.dumps(scenario, indent=4))
 
-    graph = Graph(scenario)
-    print(graph)
+    graph = scenario_to_graph(scenario)
+    graph.draw_graph(output_file='graph.png')
 
-    # TODO Find optimal routes
+    (graph, total_distance, solution) = solver.solve(graph, max_checks=1000)
+    graph.draw_graph(output_file='solution.png', solution=solution)
 
-    route_list = route_list_small_scenario
+    route_list = solution.convertToTöbbe()
 
     print(f"Optimal routes: {route_list}")
 
     launch = runner.launch_scenario(scenario['id'], speed=5)
     print(f"Launched scenario {launch['scenario_id']} at {launch['startTime']}")
 
-    while(scenario['status'] != 'COMPLETED'):
+    while scenario['status'] != 'COMPLETED':
         scenario = runner.get_scenario(launch['scenario_id'])
         show_progress(scenario)
         

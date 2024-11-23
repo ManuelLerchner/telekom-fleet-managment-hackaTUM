@@ -113,8 +113,6 @@ class Graph:
         except Exception as e:
             print(f"Error saving graph: {e}")
 
-        # save dotfile to string
-        dot.save(output_file.rsplit('.', 1)[0] + ".dot")
 
     def __str__(self):
         vstring = ""
@@ -175,7 +173,7 @@ def scenario_to_graph(scenario):
 
     # Add edges from customer destination points to customer starting points (exclude same customer)
     for dest_vertex in filter(lambda vertex: vertex.type == 'destination', vertices):
-        for start_vertex in filter(lambda vertex: vertex.type == 'start' and vertex.name != dest_vertex[:-5], vertices):
+        for start_vertex in filter(lambda vertex: vertex.type == 'start' and vertex.name != dest_vertex.name[:-5], vertices):
             edges.append((
                 dest_vertex,
                 start_vertex,
