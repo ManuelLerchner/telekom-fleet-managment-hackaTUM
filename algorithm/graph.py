@@ -124,3 +124,64 @@ class Graph:
             estring += f"{v1} -- {w} -- {v2}\n"
 
         return f"Vertices:\n{vstring}\nEdges:\n{estring}"
+
+
+########################################################################################
+# Create a graph from a scenario
+########################################################################################
+
+def distance(p1: Vertex, p2: Vertex):
+    return ((p1.pos[0] - p2.pos[0])**2 + (p1.pos[1] - p2.pos[1])**2)**0.5
+
+def scenario_to_graph(scenario):
+    vertices = []
+    edges = []
+
+    # Add nodes and edges for single customers (start, dest, way)
+    for customer in scenario['customers']:
+        start_vertex = Vertex(
+            name=customer['id'],
+            pos=(customer['coordX'], customer['coordY']),
+            type='start'
+        )
+
+        dest_vertex = Vertex(
+            name=customer['id'],
+            pos=(customer['destinationX'],customer['destinationY']),
+            type='destination'
+        )
+
+        vertices.append(start_vertex)
+        vertices.append(dest_vertex)
+
+        edges.append((
+            start_vertex,
+            distance(start_vertex, dest_vertex),
+            dest_vertex,
+        ))
+
+    # Add nodes for vehicle starting points
+    for vehicle in scenario['vehicles']:
+        vertices.append(Vertex(
+            name=vehicle['id'],
+            pos=(vehicle['coordX'], vehicle['coordY']),
+            type='vehicle'
+        ))
+
+    # Add edges from vehicle starting points to customer starting points
+    for vehicle_node in filter(lambda node: node['type'] == 'vehicle', vertices):
+        for start_vertex in filter(lambda node: node['type'] == 'start', vertices):
+            edges.append((
+                vehicle_node,
+                distance(vehicle_node, start_vertex),
+                start_vertex
+            ))
+
+    # Add edges from customer destination points to customer starting points (exclude same customer)
+    for dest_vertex in filter(lambda node: node['type'] == 'destination', vertices):
+        for start_vertex in filter(lambda node: node['type'] == 'start' and node['id'] != dest_vertex['id'], vertices):
+            edges.append((
+                dest_vertex,
+                distance(dest_vertex, start_vertex),
+                start_vertex,
+            ))
